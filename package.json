@@ -37,11 +37,6 @@
     ]
   },
   "devDependencies": {
-    "fibers": "^5.0.0",
-    "node-sass": "^4.14.0",
     "sass": "^1.26.5"
-  },
-  "optionalDependencies": {
-    "fsevents": "^2.1.3"
   }
 }
