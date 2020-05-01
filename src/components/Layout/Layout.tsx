@@ -3,7 +3,7 @@ import './Layout.scss';
 import { cn } from '@bem-react/classname';
 import Cell, { CELL_SIZE } from '../Cell/Cell';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeActivePlayer } from '../../store';
+import { changeActivePlayer, State } from '../../store';
 
 
 interface IProps {
@@ -43,7 +43,7 @@ const Layout = function(props: IProps) {
         x: getCount(document.documentElement.clientWidth),
         y: getCount(document.documentElement.clientHeight),
     });
-    const { activePlayer } = useSelector(state => state);
+    const { activePlayer } = useSelector((state: State) => state);
     const dispatch = useDispatch();
 
     const cellsCount = counts.x * counts.y;
@@ -69,32 +69,44 @@ const Layout = function(props: IProps) {
     }, [handleResize]);
 
     function addCells(): React.ReactNode {
-        const cells = [];
+        const rows = [];
 
-        for (let i = 0; i < cellsCount; i++) {
-            cells.push(
-                <Cell
-                    key={i}
-                    activePlayer={activePlayer}
-                    changePlayer={changePlayer}
-                    className={cnLayout('cell')}
-                />
+        for (let i = 0; i < counts.y; i++) {
+            const cells = [];
+
+            for (let j = 0; j < counts.x; j++) {
+                cells.push(
+                    <Cell
+                        key={j}
+                        activePlayer={activePlayer}
+                        changePlayer={changePlayer}
+                        className={cnLayout('cell')}
+                    />
+                );
+            }
+
+            rows.push(
+                <tr key={i}>
+                    {cells}
+                </tr>
             );
         }
 
-        return cells;
+        return rows;
     }
 
     return (
-        <div
+        <table
             className={cnLayout()}
             style={{
-                width: CELL_SIZE * counts.x,
-                height: CELL_SIZE * counts.y,
+                width: (CELL_SIZE * counts.x) + CELL_SIZE,
+                height: (CELL_SIZE * counts.y) + CELL_SIZE,
             }}
         >
-            {addCells()}
-        </div>
+            <tbody>
+                {addCells()}
+            </tbody>
+        </table>
     );
 };
 

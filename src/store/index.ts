@@ -11,6 +11,8 @@ interface IChangeActivePlayer {
     type: typeof CHANGE_ACTIVE_PLAYER,
 }
 
+export type State = ReturnType<typeof reducer>;
+
 export const changeActivePlayer = () => ({
     type: CHANGE_ACTIVE_PLAYER,
 });

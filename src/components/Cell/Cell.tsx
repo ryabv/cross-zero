@@ -24,14 +24,14 @@ const Cell = function(props: IProps) {
     }, [player, changePlayer, activePlayer]);
 
     return (
-        <div
+        <td
             onClick={handleClick}
             className={cnCell({filled: player}, [className])}
             style={{
                 width: CELL_SIZE,
                 height: CELL_SIZE,
             }}
-        ></div>
+        ></td>
     );
 };
 
