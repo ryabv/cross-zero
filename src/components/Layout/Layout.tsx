@@ -1,9 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import './Layout.scss';
 import { cn } from '@bem-react/classname';
-import Cell, { CELL_SIZE } from '../Cell/Cell';
+import Cell from '../Cell/Cell';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeActivePlayer, State } from '../../store';
+import { State } from '../../store';
+import { getCount, throttle } from '../../utils';
+import { CELL_SIZE } from '../../consts';
+import { changeMap, ChangeMapPayload } from '../../store/actions';
 
 
 interface IProps {
@@ -12,51 +15,24 @@ interface IProps {
 
 const cnLayout = cn('layout');
 
-const getCount = (viewportSize: number) => {
-    return Math.floor(viewportSize / CELL_SIZE);
-};
-
-function throttle(callback: () => void, wait: number, immediate = false) {
-    let timeout: ReturnType<typeof setTimeout> | null = null;
-    let initialCall = true;
-    
-    return function() {
-        const callNow = immediate && initialCall;
-        const next = () => {
-            callback.apply(this, arguments);
-            timeout = null;
-        };
-        
-        if (callNow) { 
-            initialCall = false;
-            next();
-        }
-    
-        if (!timeout) {
-            timeout = setTimeout(next, wait);
-        }
-    }
-}
-
 const Layout = function(props: IProps) {
+
     const [counts, setCounts] = useState({
-        x: getCount(document.documentElement.clientWidth),
-        y: getCount(document.documentElement.clientHeight),
+        x: getCount(document.documentElement.clientWidth, CELL_SIZE),
+        y: getCount(document.documentElement.clientHeight, CELL_SIZE),
     });
-    const { activePlayer } = useSelector((state: State) => state);
+    const { activePlayer, toggleRestart } = useSelector((state: State) => state);
     const dispatch = useDispatch();
 
-    const cellsCount = counts.x * counts.y;
-
-    const changePlayer = useCallback(() => {
-        dispatch(changeActivePlayer());
+    const handleChangeMap = useCallback((payload: ChangeMapPayload) => {
+        dispatch(changeMap(payload));
     }, [dispatch]);
 
     const handleResize = useCallback(
         throttle(() => {
             setCounts({
-                x: getCount(document.documentElement.clientWidth),
-                y: getCount(document.documentElement.clientHeight),
+                x: getCount(document.documentElement.clientWidth, CELL_SIZE),
+                y: getCount(document.documentElement.clientHeight, CELL_SIZE),
             })
         }, 300),
         []
@@ -71,22 +47,25 @@ const Layout = function(props: IProps) {
     function addCells(): React.ReactNode {
         const rows = [];
 
-        for (let i = 0; i < counts.y; i++) {
+        for (let row = 0; row < counts.y; row++) {
             const cells = [];
 
-            for (let j = 0; j < counts.x; j++) {
+            for (let col = 0; col < counts.x; col++) {
                 cells.push(
                     <Cell
-                        key={j}
+                        key={col}
+                        row={row}
+                        col={col}
+                        toggleRestart={toggleRestart}
+                        handleChangeMap={handleChangeMap}
                         activePlayer={activePlayer}
-                        changePlayer={changePlayer}
                         className={cnLayout('cell')}
                     />
                 );
             }
 
             rows.push(
-                <tr key={i}>
+                <tr key={row}>
                     {cells}
                 </tr>
             );
