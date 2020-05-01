@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/cross-zero/static/css/main.f723170a.chunk.css",
+    "main.js": "/cross-zero/static/js/main.46bb8307.chunk.js",
+    "main.js.map": "/cross-zero/static/js/main.46bb8307.chunk.js.map",
+    "runtime-main.js": "/cross-zero/static/js/runtime-main.0514e9a0.js",
+    "runtime-main.js.map": "/cross-zero/static/js/runtime-main.0514e9a0.js.map",
+    "static/js/2.f0b011fb.chunk.js": "/cross-zero/static/js/2.f0b011fb.chunk.js",
+    "static/js/2.f0b011fb.chunk.js.map": "/cross-zero/static/js/2.f0b011fb.chunk.js.map",
+    "index.html": "/cross-zero/index.html",
+    "precache-manifest.c57ffc060318dbcb71ca92b2f2f5ecf8.js": "/cross-zero/precache-manifest.c57ffc060318dbcb71ca92b2f2f5ecf8.js",
+    "service-worker.js": "/cross-zero/service-worker.js",
+    "static/css/main.f723170a.chunk.css.map": "/cross-zero/static/css/main.f723170a.chunk.css.map",
+    "static/js/2.f0b011fb.chunk.js.LICENSE.txt": "/cross-zero/static/js/2.f0b011fb.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0514e9a0.js",
+    "static/js/2.f0b011fb.chunk.js",
+    "static/css/main.f723170a.chunk.css",
+    "static/js/main.46bb8307.chunk.js"
+  ]
+}
